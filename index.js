@@ -2,6 +2,7 @@ const {
   Client, GatewayIntentBits, Events, EmbedBuilder,
   SlashCommandBuilder, PermissionFlagsBits
 } = require('discord.js');
+const http = require('http'); // أضفنا هذا
 
 // قراءة الإعدادات من Environment Variables
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
@@ -123,3 +124,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 client.login(DISCORD_TOKEN);
+
+// ==========================================
+// سيرفر وهمي لإرضاء منصة Render
+// ==========================================
+const PORT = process.env.PORT || 8080;
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Bot is alive\n');
+}).listen(PORT, () => {
+  console.log(`[+] Dummy web server running on port ${PORT}`);
+});
